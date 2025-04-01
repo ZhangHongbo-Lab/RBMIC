@@ -24,9 +24,9 @@ Run `full.py` or `full1.py`, input the image paths and the four marked coordinat
 #bash $python full.py
 ```
 ### 3.3 Affine Transformation 
-Run distory_image.py with the image paths and eight edge coordinates to implements image perspective transformation and overlay visualization, featuring an interactive interface for inputting image paths and keypoint coordinates.
+Run `distory_image.py` with the image paths and eight edge coordinates to implements image perspective transformation and overlay visualization, featuring an interactive interface for inputting image paths and keypoint coordinates.
 ```
 #bash $python distory_image.py
 ```
 ### 3.4 Adjustment 
-If the output results cannot meet the requirements of the user, please run image_clicker.py again and  other next steps.
+If the output results cannot meet the requirements of the user, please run `image_clicker.py` again and  other next steps.
