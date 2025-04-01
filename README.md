@@ -16,7 +16,7 @@ Run `before.py`, input the paths of the two images, and enter preprocessing para
 ### 3.2 Image Coordinate Clicking 
 Run `image_clicker.py` for both images to mark corresponding cell coordinates and enables interactive coordinate selection and saves regions of interest (ROIs).
 ```
-#bash $python full.py
+#bash $image_clicker.py
 ```
 ### 3.2 Dual-Image Registration
 Run `full.py` or `full1.py`, input the image paths and the four marked coordinates to performs angle and length ratio calculations, image resizing, cropping, alignment, and image overlay for result verification.
