@@ -1,42 +1,59 @@
-# RBMIC Biological HE and Fluorescence Image Registration Software
+# RBMIC Biomedical Image Registration Tool
 ## 1. Introduction
-The RBMIC Biological HE and Fluorescence Image Registration Software is designed for cell-level alignment of Hematoxylin & Eosin (HE) and fluorescence images. Written in Python, this tool allows users to manually mark matching cell pairs, significantly enhancing registration accuracy compared to conventional methods.
+RBMIC (Registration-Based Merging Image Calculator) is an interactive tool for co-registration of immunohistochemistry (IHC) stained images with immunofluorescence (IF) images. The tool implements a complete pipeline from linear perspective transformation to nonlinear elastic registration, specifically designed for multimodal image alignment in medical image analysis.
 ## 2. Installation
 1.	Ensure Python (≥3.6) is installed on your system.
 2.	Install Dependencies:
 ```
-  	pip install opencv-python  
+  	pip install opencv-python numpy scipy matplotlib
 ```
-3. Download the `rbmic.zip` archive from the /code directory and unzip `rbmic.zip` to your desired directory.
-4. Running:  
+3. Download the `pipeline.py` from the /code directory and run:
+```
+  	python pipeline.py
+```
+5. Running:  
   Local Execution: Right-click the main program file and select "Run with Python".  
   Server Execution: Navigate to the directory via Terminal/SSH and run the program using Python commands.
    
 ## 3. Usage
-### 3.1 Image Preprocessing 
-Run `before.py`, input the paths of the two images, and enter preprocessing parameters as prompted and handles image preprocessing tasks such as adjusting the region of interest (ROI) and executing image processing functions.
-```
-#bash $python before.py  
-```
-### 3.2 Image Coordinate Clicking 
-Run `image_clicker.py` for both images to mark corresponding cell coordinates and enables interactive coordinate selection and saves regions of interest (ROIs).
-```
-#bash $image_clicker.py
-```
-### 3.2 Dual-Image Registration
-Run `full.py` or `full1.py`, input the image paths and the four marked coordinates to performs angle and length ratio calculations, image resizing, cropping, alignment, and image overlay for result verification.
-```
-#bash $python full.py
-or
-#bash $python full1.py
-```
-`full.py`: This version emphasizes fluorescence signal, making it ideal for observing fluorescence intensity and signal distribution.\
-`full1.py`: This version emphasizes HE morphology, making it more suitable for observing the structural details of Hematoxylin & Eosin-stained tissue.
+### 3.1 Image Selection:
+Select hematoxylin and eosin (H&E) stained image (.jpg, .png, .bmp, .tif formats)
+Select corresponding fluorescence image
 
-### 3.3 Affine Transformation 
-Run `distory_image.py` with the image paths and eight edge coordinates to implements image perspective transformation and overlay visualization, featuring an interactive interface for inputting image paths and keypoint coordinates.
-```
-#bash $python distory_image.py
-```
-### 3.4 Adjustment 
-If the output results cannot meet the requirements of the user, please run `image_clicker.py` again and  other next steps.
+### 3.2 Landmark Marking Process:
+#### 3.2.1 First Stage (Global Registration):
+Mark at least 3 corresponding points on HE image
+Mark the same 3 corresponding points on fluorescence image
+#### 3.2.1 Second Stage (Nonlinear Optimization):
+Mark additional corresponding points on HE image (any number)
+Mark the same points on the registered fluorescence image
+
+### 3.2 Interactive Controls:
+Left Mouse Click: Mark point
+R Key: Reset current points
+Enter Key: Confirm current points and proceed
+S Key: Save final result
+Any Other Key: Continue to next step
+
+## 4. Technical Details
+### 4.1 Registration Pipeline
+1.	Initial Perspective Transformation: Global homography matrix calculation using RANSAC algorithm
+2.	RBF Nonlinear Registration: Radial basis function interpolation based on landmark pairs
+3.	Polynomial Transformation Alternative: Polynomial fitting when RBF fails
+4.	Affine Transformation Fallback: Final safeguard when all methods fail
+### 4.2 Adaptive Visualization
+Marker sizes adapt to image resolution
+Text label sizes and positions adjust automatically
+Supports both color and grayscale images
+
+## 5. Output
+After registration completion, the program generates:
+[fluorescence_filename]_reged.jpg: Registered fluorescence image
+Real-time display of registration overlay
+
+## 6. Applications
+Multimodal medical image fusion
+Histopathological image analysis
+Fluorescence microscopy image processing
+Medical image registration research
+
